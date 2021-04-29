@@ -1,0 +1,1 @@
+/home/camh/Retro68-build/toolchain/bin/m68k-apple-macos-g++     CMakeFiles/NuklearOnCoprocessorTest.dir/coprocessorjs.c.obj CMakeFiles/NuklearOnCoprocessorTest.dir/hello.c.obj  -o NuklearOnCoprocessorTest.code.bin  -lRetroConsole 

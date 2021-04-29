@@ -1,0 +1,45 @@
+index.js@@@
+const Nuklear = require('emscriptennuklear')
+
+class CoprocessorNuklear {
+
+  async runEvent (event) {
+
+  	const output = await Nuklear.runEvent(event)
+
+  	if (!event || !event.length || event.length === 0) {
+
+  		return ``
+  	}
+
+  	let returnValue = ``
+
+  	for (const command of output) {
+
+  		returnValue = `${returnValue}\n${command}`
+  	}
+
+  	return returnValue
+  }
+}
+
+module.exports = CoprocessorNuklear&&&
+package.json@@@
+{
+  "name": "js",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "f"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "emscriptennuklear": "^1.0.1"
+  }
+}

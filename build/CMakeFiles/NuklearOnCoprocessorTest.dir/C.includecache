@@ -1,0 +1,42 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/camh/Documents/Retro68kApps/NuklearOnCoprocessorTest/coprocessorjs.c
+stdio.h
+-
+Serial.h
+-
+math.h
+-
+Devices.h
+-
+string.h
+/home/camh/Documents/Retro68kApps/NuklearOnCoprocessorTest/string.h
+stdbool.h
+-
+time.h
+-
+coprocessorjs.h
+/home/camh/Documents/Retro68kApps/NuklearOnCoprocessorTest/coprocessorjs.h
+
+/home/camh/Documents/Retro68kApps/NuklearOnCoprocessorTest/coprocessorjs.h
+
+/home/camh/Documents/Retro68kApps/NuklearOnCoprocessorTest/hello.c
+Resources.h
+-
+stdio.h
+-
+output_js.h
+/home/camh/Documents/Retro68kApps/NuklearOnCoprocessorTest/output_js.h
+coprocessorjs.h
+/home/camh/Documents/Retro68kApps/NuklearOnCoprocessorTest/coprocessorjs.h
+time.h
+-
+
+/home/camh/Documents/Retro68kApps/NuklearOnCoprocessorTest/output_js.h
+
