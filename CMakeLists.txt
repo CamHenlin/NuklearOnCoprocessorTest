@@ -12,6 +12,7 @@ add_application(NuklearOnCoprocessorTest
     output_js.h
     coprocessorjs.h
     coprocessorjs.c
+    SerialHelper.c
 	hello.c
-	CONSOLE
+	Sample.r
    )

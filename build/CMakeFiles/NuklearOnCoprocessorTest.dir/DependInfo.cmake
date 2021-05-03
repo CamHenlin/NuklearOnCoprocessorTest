@@ -4,6 +4,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_C
+  "/home/camh/Documents/Retro68kApps/NuklearOnCoprocessorTest/SerialHelper.c" "/home/camh/Documents/Retro68kApps/NuklearOnCoprocessorTest/build/CMakeFiles/NuklearOnCoprocessorTest.dir/SerialHelper.c.obj"
   "/home/camh/Documents/Retro68kApps/NuklearOnCoprocessorTest/coprocessorjs.c" "/home/camh/Documents/Retro68kApps/NuklearOnCoprocessorTest/build/CMakeFiles/NuklearOnCoprocessorTest.dir/coprocessorjs.c.obj"
   "/home/camh/Documents/Retro68kApps/NuklearOnCoprocessorTest/hello.c" "/home/camh/Documents/Retro68kApps/NuklearOnCoprocessorTest/build/CMakeFiles/NuklearOnCoprocessorTest.dir/hello.c.obj"
   )

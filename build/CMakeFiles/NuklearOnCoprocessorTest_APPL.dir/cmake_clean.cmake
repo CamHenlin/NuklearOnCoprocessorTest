@@ -5,6 +5,7 @@ file(REMOVE_RECURSE
   "NuklearOnCoprocessorTest.ad"
   "NuklearOnCoprocessorTest.bin"
   "NuklearOnCoprocessorTest.dsk"
+  "Sample.r.rsrc.bin"
 )
 
 # Per-language clean rules from dependency scanning.

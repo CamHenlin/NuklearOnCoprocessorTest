@@ -5,6 +5,7 @@
 #include "string.h"
 #include <stdbool.h>
 #include <time.h>
+#include "SerialHelper.h"
 #include "coprocessorjs.h"
 
 IOParam outgoingSerialPortReference;
@@ -73,7 +74,7 @@ void setupPBControlForSerialPort(short serialPortShort) {
     CntrlParam cb;
     cb.ioCRefNum = serialPortShort; // TODO: this is always 0 - does it matter? should we hard code 0 here? research
     cb.csCode = 8; // TODO: need to look up and document what csCode = 8 means
-    cb.csParam[0] = stop10 | noParity | data8 | baud19200; // TODO: can we achieve higher than 9600 baud? - should be able to achieve at least 19.2k on a 68k machine
+    cb.csParam[0] = stop10 | noParity | data8 | baud28800; // TODO: can we achieve higher than 9600 baud? - should be able to achieve at least 19.2k on a 68k machine
     OSErr err = PBControl ((ParmBlkPtr) & cb, 0); // PBControl definition: http://mirror.informatimago.com/next/developer.apple.com/documentation/mac/Networking/Networking-296.html
 
     if (PRINT_ERRORS) {
@@ -203,11 +204,12 @@ void readSerialPort(char* output) {
     }
     
     // make sure output variable is clear
-    memset(&output[0], 0, sizeof(MAX_RECEIVE_SIZE));
+    memset(&output[0], 0, MAX_RECEIVE_SIZE);
 
     bool done = false;
     char tempOutput[MAX_RECEIVE_SIZE];
     long int totalByteCount = 0;
+    incomingSerialPortReference.ioReqCount = 0;
 
     while (!done) {
 
@@ -272,15 +274,8 @@ void readSerialPort(char* output) {
             sprintf(errMessage, "err:%d\n", err);
             printf(errMessage);
         }
-        
-        if (DEBUGGING) {
-            
-            char debugMessage[255];
-            sprintf(debugMessage, "received bytes:%s\n", GlobalSerialInputBuffer);
-            printf(debugMessage);
-        }
 
-        strncat(tempOutput, GlobalSerialInputBuffer, byteCount);
+        memcpy(tempOutput, GlobalSerialInputBuffer, byteCount);
         
         totalByteCount += byteCount;
 
@@ -308,7 +303,7 @@ void readSerialPort(char* output) {
     strncat(output, tempOutput, totalByteCount);
 
     // once we are done reading the buffer entirely, we need to clear it. i'm not sure if this is the best way or not but seems to work
-    memset(&GlobalSerialInputBuffer[0], 0, sizeof(GlobalSerialInputBuffer)); 
+    memset(&GlobalSerialInputBuffer[0], 0, MAX_RECEIVE_SIZE); 
 
     return;
 }
@@ -554,10 +549,13 @@ void callFunctionOnCoprocessor(char* functionName, char* parameters, char* outpu
     // delimeter for function paramters is &&& - user must do this on their own via sprintf call or other construct - this is easiest for us to deal with
     sprintf(functionCallMessage, functionTemplate, functionName, parameters);
 
+    //                         writeSerialPortDebug(boutRefNum, functionCallMessage);
     writeToCoprocessor("FUNCTION", functionCallMessage);
 
     char serialPortResponse[MAX_RECEIVE_SIZE];
     readSerialPort(serialPortResponse);
+    // writeSerialPortDebug(boutRefNum, "========================Got response from serial port");
+    // writeSerialPortDebug(boutRefNum, serialPortResponse);
     getReturnValueFromResponse(serialPortResponse, "FUNCTION", output);
     
     return;
