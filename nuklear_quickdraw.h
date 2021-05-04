@@ -244,16 +244,10 @@ void nk_quickdraw_render(WindowPtr window, char* commands) {
         // writeSerialPortDebug(boutRefNum, "empty commands list! bail!");
         return;
     }
-CGrafPtr origPort;
-GDHandle origDevice;
-GWorldPtr myOffScreenWorld;
-PixMapHandle offPixMapHandle;
-    GetGWorld(&origPort, &origDevice);
 
-    NewGWorld(&myOffScreenWorld, 0, &origPort->portRect, NULL, NULL, 0);
-    SetGWorld(myOffScreenWorld, NULL); //{set current graphics port to offscreen}
-    offPixMapHandle = GetGWorldPixMap(myOffScreenWorld);
-    LockPixels(offPixMapHandle);
+    SetPort(window);
+    BeginUpdate(window);
+    EraseRect(&window->portRect);
     // OpenPort(&gMainOffScreen.BWPort);
     // SetPort(&gMainOffScreen.BWPort);
     // SetPortBits(&gMainOffScreen.BWBits);
@@ -715,15 +709,12 @@ PixMapHandle offPixMapHandle;
     // writeSerialPortDebug(boutRefNum, "done with commands, copying bits to current window");
     memset(commands, 0, 102400);
 
-    //setPort(window);
-
-    CopyBits(&((GrafPtr)myOffScreenWorld)->portBits, &((GrafPtr)origPort)->portBits, &myOffScreenWorld->portRect, &origPort->portRect, srcCopy, NULL);
-    UnlockPixels(offPixMapHandle);
-    DisposeGWorld(myOffScreenWorld);
+    // SetPort(window);
+    EndUpdate(window);
 
     // our offscreen bitmap is the same size as our port rectangle, so we
     // get away with using the portRect sizing for source and destination
-    // CopyBits(&gMainOffScreen.bits->portBits, &window->portBits, &window->portRect, &window->portRect, srcCopy, 0L);
+    //CopyBits(&gMainOffScreen.bits->portBits, &window->portBits, &window->portRect, &window->portRect, srcCopy, 0L);
 }
 
 void nk_quickdraw_handle_event(EventRecord *event) { 
