@@ -5,10 +5,15 @@ class CoprocessorNuklear {
 
   async runEvent (event) {
 
+  	console.log(`coprocessor:runEvent: ${event}`)
+
   	const output = await Nuklear.runEvent(event)
+
+  	console.log(`coprocessor:runEvent: back from nuklear with output: ${output}`)
 
   	if (!event || !event.length || event.length === 0) {
 
+  		console.log(`coprocessor:runEvent: bail out with empty string`)
   		return ``
   	}
 
@@ -18,6 +23,8 @@ class CoprocessorNuklear {
 
   		returnValue = `${returnValue}\n${command}`
   	}
+
+	console.log(`coprocessor:runEvent: returnValue: ${returnValue}`)
 
   	return returnValue
   }
@@ -40,6 +47,6 @@ package.json@@@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "emscriptennuklear": "^1.0.1"
+    "emscriptennuklear": "1.0.4"
   }
 }

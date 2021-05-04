@@ -57,8 +57,9 @@ CMakeFiles/NuklearOnCoprocessorTest_APPL: NuklearOnCoprocessorTest.bin
 
 
 NuklearOnCoprocessorTest.bin: NuklearOnCoprocessorTest.code.bin
+NuklearOnCoprocessorTest.bin: Sample.r.rsrc.bin
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/camh/Documents/Retro68kApps/NuklearOnCoprocessorTest/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating NuklearOnCoprocessorTest.bin, NuklearOnCoprocessorTest.APPL, NuklearOnCoprocessorTest.dsk, NuklearOnCoprocessorTest.ad, %NuklearOnCoprocessorTest.ad"
-	/home/camh/Retro68-build/toolchain/bin/Rez /home/camh/Retro68-build/toolchain/m68k-apple-macos/RIncludes/Retro68APPL.r -I/home/camh/Retro68-build/toolchain/m68k-apple-macos/RIncludes --copy NuklearOnCoprocessorTest.code.bin -o NuklearOnCoprocessorTest.bin -t APPL -c ???? --cc NuklearOnCoprocessorTest.dsk --cc NuklearOnCoprocessorTest.APPL --cc %NuklearOnCoprocessorTest.ad
+	/home/camh/Retro68-build/toolchain/bin/Rez /home/camh/Retro68-build/toolchain/m68k-apple-macos/RIncludes/Retro68APPL.r -I/home/camh/Retro68-build/toolchain/m68k-apple-macos/RIncludes --copy NuklearOnCoprocessorTest.code.bin -o NuklearOnCoprocessorTest.bin -t APPL -c ???? --cc NuklearOnCoprocessorTest.dsk --cc NuklearOnCoprocessorTest.APPL --cc %NuklearOnCoprocessorTest.ad /home/camh/Documents/Retro68kApps/NuklearOnCoprocessorTest/build/Sample.r.rsrc.bin
 
 NuklearOnCoprocessorTest.APPL: NuklearOnCoprocessorTest.bin
 	@$(CMAKE_COMMAND) -E touch_nocreate NuklearOnCoprocessorTest.APPL
@@ -72,12 +73,17 @@ NuklearOnCoprocessorTest.ad: NuklearOnCoprocessorTest.bin
 %NuklearOnCoprocessorTest.ad: NuklearOnCoprocessorTest.bin
 	@$(CMAKE_COMMAND) -E touch_nocreate %NuklearOnCoprocessorTest.ad
 
+Sample.r.rsrc.bin: ../Sample.r
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/camh/Documents/Retro68kApps/NuklearOnCoprocessorTest/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Generating Sample.r.rsrc.bin"
+	/home/camh/Retro68-build/toolchain/bin/Rez /home/camh/Documents/Retro68kApps/NuklearOnCoprocessorTest/Sample.r -I /home/camh/Retro68-build/toolchain/m68k-apple-macos/RIncludes -o Sample.r.rsrc.bin
+
 NuklearOnCoprocessorTest_APPL: CMakeFiles/NuklearOnCoprocessorTest_APPL
 NuklearOnCoprocessorTest_APPL: NuklearOnCoprocessorTest.bin
 NuklearOnCoprocessorTest_APPL: NuklearOnCoprocessorTest.APPL
 NuklearOnCoprocessorTest_APPL: NuklearOnCoprocessorTest.dsk
 NuklearOnCoprocessorTest_APPL: NuklearOnCoprocessorTest.ad
 NuklearOnCoprocessorTest_APPL: %NuklearOnCoprocessorTest.ad
+NuklearOnCoprocessorTest_APPL: Sample.r.rsrc.bin
 NuklearOnCoprocessorTest_APPL: CMakeFiles/NuklearOnCoprocessorTest_APPL.dir/build.make
 
 .PHONY : NuklearOnCoprocessorTest_APPL

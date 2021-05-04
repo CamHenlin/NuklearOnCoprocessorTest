@@ -76,12 +76,12 @@ clean: CMakeFiles/NuklearOnCoprocessorTest.dir/clean
 CMakeFiles/NuklearOnCoprocessorTest_APPL.dir/all: CMakeFiles/NuklearOnCoprocessorTest.dir/all
 	$(MAKE) -f CMakeFiles/NuklearOnCoprocessorTest_APPL.dir/build.make CMakeFiles/NuklearOnCoprocessorTest_APPL.dir/depend
 	$(MAKE) -f CMakeFiles/NuklearOnCoprocessorTest_APPL.dir/build.make CMakeFiles/NuklearOnCoprocessorTest_APPL.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/camh/Documents/Retro68kApps/NuklearOnCoprocessorTest/build/CMakeFiles --progress-num=4 "Built target NuklearOnCoprocessorTest_APPL"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/camh/Documents/Retro68kApps/NuklearOnCoprocessorTest/build/CMakeFiles --progress-num=5,6 "Built target NuklearOnCoprocessorTest_APPL"
 .PHONY : CMakeFiles/NuklearOnCoprocessorTest_APPL.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/NuklearOnCoprocessorTest_APPL.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/camh/Documents/Retro68kApps/NuklearOnCoprocessorTest/build/CMakeFiles 4
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/camh/Documents/Retro68kApps/NuklearOnCoprocessorTest/build/CMakeFiles 6
 	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/NuklearOnCoprocessorTest_APPL.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/camh/Documents/Retro68kApps/NuklearOnCoprocessorTest/build/CMakeFiles 0
 .PHONY : CMakeFiles/NuklearOnCoprocessorTest_APPL.dir/rule
@@ -103,12 +103,12 @@ CMakeFiles/NuklearOnCoprocessorTest_APPL.dir/clean:
 CMakeFiles/NuklearOnCoprocessorTest.dir/all:
 	$(MAKE) -f CMakeFiles/NuklearOnCoprocessorTest.dir/build.make CMakeFiles/NuklearOnCoprocessorTest.dir/depend
 	$(MAKE) -f CMakeFiles/NuklearOnCoprocessorTest.dir/build.make CMakeFiles/NuklearOnCoprocessorTest.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/camh/Documents/Retro68kApps/NuklearOnCoprocessorTest/build/CMakeFiles --progress-num=1,2,3 "Built target NuklearOnCoprocessorTest"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/camh/Documents/Retro68kApps/NuklearOnCoprocessorTest/build/CMakeFiles --progress-num=1,2,3,4 "Built target NuklearOnCoprocessorTest"
 .PHONY : CMakeFiles/NuklearOnCoprocessorTest.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/NuklearOnCoprocessorTest.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/camh/Documents/Retro68kApps/NuklearOnCoprocessorTest/build/CMakeFiles 3
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/camh/Documents/Retro68kApps/NuklearOnCoprocessorTest/build/CMakeFiles 4
 	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/NuklearOnCoprocessorTest.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/camh/Documents/Retro68kApps/NuklearOnCoprocessorTest/build/CMakeFiles 0
 .PHONY : CMakeFiles/NuklearOnCoprocessorTest.dir/rule

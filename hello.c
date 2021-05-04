@@ -25,6 +25,8 @@
 #include "output_js.h"
 #include "coprocessorjs.h"
 
+char jsFunctionResponse[102400]; // Matches MAX_RECEIVE_SIZE
+
 #define WINDOW_WIDTH 510
 #define WINDOW_HEIGHT 302
 
@@ -41,14 +43,14 @@ Boolean     gHasWaitNextEvent;  /* set up by Initialize */
    the program can check it to find out if it is currently in the background. */
 Boolean     gInBackground;      /* maintained by Initialize and DoEvent */
 
-const Boolean MAC_APP_DEBUGGING = false;
+// #define MAC_APP_DEBUGGING
 /* The following globals are the state of the window. If we supported more than
    one window, they would be attatched to each document, rather than globals. */
 
 /* Here are declarations for all of the C routines. In MPW 3.0 we can use
    actual prototypes for parameter type checking. */
-void EventLoop( struct nk_context *ctx );
-void DoEvent( EventRecord *event, struct nk_context *ctx );
+void EventLoop();
+void DoEvent(EventRecord *event);
 void GetGlobalMouse( Point *mouse );
 void DoUpdate( WindowPtr window );
 void DoActivate( WindowPtr window, Boolean becomingActive );
@@ -82,32 +84,28 @@ void main()
 
     UnloadSeg((Ptr) Initialize);    /* note that Initialize must not be in Main! */
 
-    struct nk_context *ctx;
-
-    if (MAC_APP_DEBUGGING) {
+    #ifdef MAC_APP_DEBUGGING
     
-        writeSerialPort(boutRefNum, "call nk_init");
-    }
+        writeSerialPortDebug(boutRefNum, "call nk_init");
+    #endif
 
-    setupCoprocessor("my_application_id", "modem"); // could also be "printer", modem is 0 in PCE settings - printer would be 1
+    setupCoprocessor("nuklear", "modem"); // could also be "printer", modem is 0 in PCE settings - printer would be 1
 
     char programResult[MAX_RECEIVE_SIZE];
     sendProgramToCoprocessor(OUTPUT_JS, programResult);
 
-    char jsFunctionResponse[MAX_RECEIVE_SIZE];
+    nk_quickdraw_init(WINDOW_WIDTH, WINDOW_HEIGHT);
 
-    ctx = nk_quickdraw_init(WINDOW_WIDTH, WINDOW_HEIGHT);
+    #ifdef MAC_APP_DEBUGGING
 
-    if (MAC_APP_DEBUGGING) {
+        writeSerialPortDebug(boutRefNum, "call into event loop");
+    #endif
 
-        writeSerialPort(boutRefNum, "call into event loop");
-    }
-
-    EventLoop(ctx);                 /* call the main event loop */
+    EventLoop();                 /* call the main event loop */
 }
 
 #pragma segment Main
-void EventLoop(struct nk_context *ctx)
+void EventLoop()
 {
     RgnHandle cursorRgn;
     Boolean gotEvent;
@@ -123,7 +121,6 @@ void EventLoop(struct nk_context *ctx)
 
         GetGlobalMouse(&mouse);
 
-
         // as far as i can tell, there is no way to event on mouse movement with mac libraries,
         // so we are just going to track on our own, and create our own events.
         // this seems kind of a bummer to not pass this to event handling code, but to make
@@ -131,10 +128,10 @@ void EventLoop(struct nk_context *ctx)
         // call the nk_input_motion command
         if (lastMouseHPos != mouse.h || lastMouseVPos != mouse.v) {
 
-            if (MAC_APP_DEBUGGING) {
+            #ifdef MAC_APP_DEBUGGING
 
-                writeSerialPort(boutRefNum, "nk_input_motion!");
-            }
+                writeSerialPortDebug(boutRefNum, "nk_input_motion!");
+            #endif
 
             firstOrMouseMove = true;
 
@@ -144,8 +141,12 @@ void EventLoop(struct nk_context *ctx)
 
             // Mouse move is "M"
             // TODO fill coordinates
-            callFunctionOnCoprocessor("runEvent", "M100,100", jsFunctionResponse);
+            char output[128];
+            sprintf(output, "M%d,%d", mouse.h, mouse.v);
 
+            callFunctionOnCoprocessor("runEvent", output, jsFunctionResponse);
+
+            nk_quickdraw_render(FrontWindow(), jsFunctionResponse);
             // TODO: must render post-result
         }
 
@@ -163,17 +164,17 @@ void EventLoop(struct nk_context *ctx)
 
         if (gotEvent) {
 
-            if (MAC_APP_DEBUGGING) {
+            #ifdef MAC_APP_DEBUGGING
 
-                writeSerialPort(boutRefNum, "calling to DoEvent");
-            }
+                writeSerialPortDebug(boutRefNum, "calling to DoEvent");
+            #endif
 
-            DoEvent(&event, ctx);
+            DoEvent(&event);
 
-            if (MAC_APP_DEBUGGING) {
+            #ifdef MAC_APP_DEBUGGING
 
-                writeSerialPort(boutRefNum, "done with DoEvent");
-            }
+                writeSerialPortDebug(boutRefNum, "done with DoEvent");
+            #endif
         }
     } while ( true );   /* loop forever; we quit via ExitToShell */
 } /*EventLoop*/
@@ -183,7 +184,7 @@ void EventLoop(struct nk_context *ctx)
  the appropriate routines. */
 
 #pragma segment Main
-void DoEvent(EventRecord *event, struct nk_context *ctx) {
+void DoEvent(EventRecord *event) {
 
     short part;
     short err;
@@ -199,7 +200,7 @@ void DoEvent(EventRecord *event, struct nk_context *ctx) {
             switch (part)
             {
                 case inContent:
-                    nk_quickdraw_handle_event(event, ctx);
+                    nk_quickdraw_handle_event(event);
                     break;
                 default:
                     break;
@@ -220,7 +221,7 @@ void DoEvent(EventRecord *event, struct nk_context *ctx) {
                         SelectWindow(window);
 
                     }
-                    nk_quickdraw_handle_event(event, ctx);
+                    nk_quickdraw_handle_event(event);
                     break;
                 case inDrag:                /* pass screenBits.bounds to get all gDevices */
                     DragWindow(window, event->where, &qd.screenBits.bounds);
@@ -249,7 +250,7 @@ void DoEvent(EventRecord *event, struct nk_context *ctx) {
                 }
             }
 
-            nk_quickdraw_handle_event(event, ctx);
+            nk_quickdraw_handle_event(event);
             break;
         case activateEvt:
             DoActivate((WindowPtr) event->message, (event->modifiers & activeFlag) != 0);
@@ -466,7 +467,7 @@ void DoMenuCommand(menuResult)
                     // write data to serial port
                     // Configure PCE/macplus to map serial port to ser_b.out. This port can then be used for debug output
                     // by using: tail -f ser_b.out
-                    // OSErr res = writeSerialPort(boutRefNum, "Hello World");
+                    // OSErr res = writeSerialPortDebug(boutRefNum, "Hello World");
                     // if (res < 0)
                     //    AlertUser();
 
@@ -479,7 +480,7 @@ void DoMenuCommand(menuResult)
 
                     char str2[255];
                     sprintf(str2, "ROM85: %d - SysVersion: %d - VRes: %d - HRes: %d - Time: %lu", *ROM85, *SysVersion, *ScrVRes, *ScrHRes, *Time);
-                    // writeSerialPort(boutRefNum, str2);               
+                    // writeSerialPortDebug(boutRefNum, str2);               
 
                     Boolean is128KROM = ((*ROM85) > 0);
                     Boolean hasSysEnvirons = false;
@@ -499,7 +500,7 @@ void DoMenuCommand(menuResult)
                     
                     sprintf(str2, "is128KROM: %d - hasSysEnvirons: %d - hasStripAddr: %d - hasSetDefaultStartup - %d", 
                                     is128KROM, hasSysEnvirons, hasStripAddr, hasSetDefaultStartup);
-                    // writeSerialPort(boutRefNum, str2);               
+                    // writeSerialPortDebug(boutRefNum, str2);               
 
                     break;
                 }

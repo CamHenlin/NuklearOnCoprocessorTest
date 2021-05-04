@@ -1,4 +1,5 @@
 file(REMOVE_RECURSE
+  "CMakeFiles/NuklearOnCoprocessorTest.dir/SerialHelper.c.obj"
   "CMakeFiles/NuklearOnCoprocessorTest.dir/coprocessorjs.c.obj"
   "CMakeFiles/NuklearOnCoprocessorTest.dir/hello.c.obj"
   "NuklearOnCoprocessorTest.code.bin"

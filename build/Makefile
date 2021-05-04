@@ -136,6 +136,33 @@ NuklearOnCoprocessorTest/fast:
 	$(MAKE) -f CMakeFiles/NuklearOnCoprocessorTest.dir/build.make CMakeFiles/NuklearOnCoprocessorTest.dir/build
 .PHONY : NuklearOnCoprocessorTest/fast
 
+SerialHelper.obj: SerialHelper.c.obj
+
+.PHONY : SerialHelper.obj
+
+# target to build an object file
+SerialHelper.c.obj:
+	$(MAKE) -f CMakeFiles/NuklearOnCoprocessorTest.dir/build.make CMakeFiles/NuklearOnCoprocessorTest.dir/SerialHelper.c.obj
+.PHONY : SerialHelper.c.obj
+
+SerialHelper.i: SerialHelper.c.i
+
+.PHONY : SerialHelper.i
+
+# target to preprocess a source file
+SerialHelper.c.i:
+	$(MAKE) -f CMakeFiles/NuklearOnCoprocessorTest.dir/build.make CMakeFiles/NuklearOnCoprocessorTest.dir/SerialHelper.c.i
+.PHONY : SerialHelper.c.i
+
+SerialHelper.s: SerialHelper.c.s
+
+.PHONY : SerialHelper.s
+
+# target to generate assembly for a file
+SerialHelper.c.s:
+	$(MAKE) -f CMakeFiles/NuklearOnCoprocessorTest.dir/build.make CMakeFiles/NuklearOnCoprocessorTest.dir/SerialHelper.c.s
+.PHONY : SerialHelper.c.s
+
 coprocessorjs.obj: coprocessorjs.c.obj
 
 .PHONY : coprocessorjs.obj
@@ -200,6 +227,9 @@ help:
 	@echo "... edit_cache"
 	@echo "... NuklearOnCoprocessorTest_APPL"
 	@echo "... NuklearOnCoprocessorTest"
+	@echo "... SerialHelper.obj"
+	@echo "... SerialHelper.i"
+	@echo "... SerialHelper.s"
 	@echo "... coprocessorjs.obj"
 	@echo "... coprocessorjs.i"
 	@echo "... coprocessorjs.s"
